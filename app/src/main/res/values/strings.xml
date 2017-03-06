@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Reachout-app</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_event_activity">Reachout</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="city_input_title">Find events in: </string>
+    <string name="city_name_hint">City name</string>
+    <string name="search_events_btn">Search</string>
 </resources>
