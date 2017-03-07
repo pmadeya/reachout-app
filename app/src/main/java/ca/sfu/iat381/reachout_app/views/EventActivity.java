@@ -25,6 +25,7 @@ public class EventActivity extends AppCompatActivity {
     private TextView eventListings;
 
     //Events that are happening in the Future in Vancouver in all categories - unsorted
+    //TODO: Change query to show events that we want to see
     private static final String EVENTS_QUERY = "http://api.eventful.com/json/events/search?...&location=Vancouver&category=music&date=Future&app_key=LGZXJ2LkPvTZQghJ";
 
     @Override
