@@ -4,8 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.renderscript.Sampler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +30,8 @@ public class EventActivity extends AppCompatActivity {
     //TODO: Change query to show events that we want to see
     private static final String EVENTS_QUERY = "http://api.eventful.com/json/events/search?...&location=Vancouver&category=music&date=Future&app_key=LGZXJ2LkPvTZQghJ";
 
+    List<Event> eventList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,14 @@ public class EventActivity extends AppCompatActivity {
         inputCity = (EditText) findViewById(R.id.cityName_editText);
         searchEventsBtn = (Button) findViewById(R.id.searchButton);
         eventListings = (TextView) findViewById(R.id.eventListings_textView);
+        Toast.makeText(this,"Testing EventActivity", Toast.LENGTH_LONG).show();
+
+        // My added code for recycler ---------------
+        EventAdapter adapter = new EventAdapter(this, eventList);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.event_list_item);
+        recyclerView.setAdapter(adapter);
+        // -------------------------------------------
+
 
         //Check connection of phone to internet
         checkConnection();

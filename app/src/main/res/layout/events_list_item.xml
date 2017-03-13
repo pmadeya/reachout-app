@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/itemNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="name"/>
+        <!--<TextView-->
+            <!--android:id="@+id/itemTimeTv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:ignore="time"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/itemVenueTv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:ignore="venue"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/itemLocationTv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:ignore="location"/>-->
+
+</LinearLayout>
