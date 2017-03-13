@@ -25,7 +25,7 @@ public class EventActivity extends AppCompatActivity {
     private TextView eventListings;
 
     //Events that are happening in the Future in Vancouver in all categories - unsorted
-    private static final String EVENTS_QUERY = "http://api.eventful.com/json/events/search?...&location=Vancouver&category=music&date=Future&app_key=LGZXJ2LkPvTZQghJ";
+    private static final String EVENTS_QUERY = "http://api.eventful.com/json/events/search?...&location=Vancouver&sort_order=popularity&category=music&date=Future&app_key=LGZXJ2LkPvTZQghJ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
