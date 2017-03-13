@@ -39,8 +39,4 @@ public class Event {
         return venue;
     }
 
-    @Override
-    public String toString() {
-        return "Name: " + name + "\n" + "Venue: " + venue + "\n";
-    }
 }

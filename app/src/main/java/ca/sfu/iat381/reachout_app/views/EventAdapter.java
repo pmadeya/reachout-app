@@ -30,18 +30,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public EventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        //////////***************** Change intro_layout2... should be list_item
+
         View itemView = inflater.inflate(R.layout.list_item, parent, false);
-        //View itemView = inflater.inflate(R.layout.list_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(itemView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(EventAdapter.ViewHolder holder, int position) {
-        //final EventAdapter event = events.get(position);
+
         final Event event = events.get(position);
         holder.nameTv.setText(event.getName());
+        holder.locationTv.setText(event.getLocation());
     }
 
     @Override
@@ -61,17 +61,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             super(itemView);
            // nameTv = (TextView) itemView.findViewById(R.id.);
             //itemNameTv is the id
-            nameTv = (TextView) itemView.findViewById(R.id.);
+
+            nameTv = (TextView) itemView.findViewById(R.id.eventName);
+            locationTv = (TextView) itemView.findViewById(R.id.eventLocation);
+
 
         }
 
     }
-
-
-
-
-
-
 
 
 }//end class
