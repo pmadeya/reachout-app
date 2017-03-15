@@ -1,9 +1,13 @@
 package ca.sfu.iat381.reachout_app.views;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.renderscript.Sampler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +29,7 @@ import ca.sfu.iat381.reachout_app.model.EventData;
 public class EventActivity extends AppCompatActivity {
 
     public RecyclerView eventRecyclerView;
+    private Vibrator myVibrator;
 
     private EditText inputCity;
 
@@ -36,7 +41,7 @@ public class EventActivity extends AppCompatActivity {
 
     //Events that are happening in the Future in Vancouver in all categories - unsorted
     //TODO: Change query to show events that we want to see
-    private static final String EVENTS_QUERY = "http://api.eventful.com/json/events/search?...&location=Barcelona&category=sports&date=Future&app_key=LGZXJ2LkPvTZQghJ";
+    private static final String EVENTS_QUERY = "http://api.eventful.com/json/events/search?...&location=Vancouver&date=2017031700-2017031900&category=music&app_key=LGZXJ2LkPvTZQghJ";
 
     List<Event> eventResults;
 
@@ -45,6 +50,45 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
+        //Instantiate a vibrator object
+        myVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+
+        //Show the intro activity (tutorial) only once
+        //  Declare a new thread to do a preference check
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Initialize SharedPreferences
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
+
+                //  If the activity has never started before...
+                if (isFirstStart) {
+
+                    //  Launch app intro
+                    Intent i = new Intent(EventActivity.this, IntroActivity.class);
+                    startActivity(i);
+
+                    //  Make a new preferences editor
+                    SharedPreferences.Editor e = getPrefs.edit();
+
+                    //  Edit preference to make it false because we don't want this to run again
+                    e.putBoolean("firstStart", false);
+
+                    //  Apply changes
+                    e.apply();
+                }
+            }
+        });
+
+        // Start the thread
+        t.start();
+
+
         eventResults = new ArrayList<Event>();
         mAdapter = new EventAdapter(getBaseContext(), eventResults);
 
@@ -52,19 +96,11 @@ public class EventActivity extends AppCompatActivity {
         searchEventsBtn = (Button) findViewById(R.id.searchButton);
         eventListings = (TextView) findViewById(R.id.eventListings_textView);
 
-
-
         eventRecyclerView = (RecyclerView) findViewById(R.id.eventsRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         eventRecyclerView.setLayoutManager(layoutManager);
         eventRecyclerView.setAdapter(mAdapter);
 
-
-//
-//        eventResults.add(new Event("Bruno Mars", "Vancouver", "7 pm", "Rogers Arena"));
-//        eventResults.add(new Event("Pink Floyd", "Boston", "5 pm", "Pepsi Centre"));
-//        eventResults.add(new Event("Ed Sheeran", "Raleigh", "8 pm", "Safeco Field"));
-//        eventResults.add(new Event("John Lennon", "Seattle", "7 pm", "Radio City Music Hall"));
 
 
 
@@ -126,6 +162,11 @@ public class EventActivity extends AppCompatActivity {
             //Return a recylerview of the objects and display in a list
             mAdapter = new EventAdapter(getBaseContext(), eventResults);
             eventRecyclerView.setAdapter(mAdapter);
+
+            //After finding the events, the phone vibrates
+            if (myVibrator.hasVibrator()) {
+                myVibrator.vibrate(1000);
+            }
 
         }
     }

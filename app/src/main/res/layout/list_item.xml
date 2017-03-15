@@ -2,25 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hi"
+        tools:text="Hi"
         android:id="@+id/eventName"
         android:gravity="left"
         android:layout_weight="1"
-        android:textSize="30sp" />
+        android:textSize="15sp" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Location"
+        tools:text="Location"
         android:id="@+id/eventLocation"
         android:gravity="left"
-        android:textSize="30sp" />
+        android:textSize="15sp" />
 
 </LinearLayout>

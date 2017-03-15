@@ -30,7 +30,6 @@ public class IntroActivity extends AppIntro2 {
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-
         finish();
     }
 
@@ -38,7 +37,7 @@ public class IntroActivity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
 
-        Intent i = new Intent(IntroActivity.this, MainActivity.class);
+        Intent i = new Intent(IntroActivity.this, EventActivity.class);
         startActivity(i);
     }
 

@@ -146,7 +146,6 @@ public final class EventData {
             }
         }
 
-
         return eventListResponse;
     }
 
@@ -165,23 +164,4 @@ public final class EventData {
         return output.toString();
 
     }
-
-
-//        try {
-//
-//
-//
-//
-//
-//        } catch (JSONException e) {
-//
-//        }
-
-
-
-//    private static void parseJSONFile(String file) {
-//
-//    }
-
-
 }
