@@ -29,9 +29,10 @@ import ca.sfu.iat381.reachout_app.model.EventData;
 public class EventActivity extends AppCompatActivity {
 
     public RecyclerView eventRecyclerView;
-    private Vibrator myVibrator;
+    //private Vibrator myVibrator;
 
     private EditText inputCity;
+    private Toast mToast;
 
     private Button searchEventsBtn;
 
@@ -51,7 +52,7 @@ public class EventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event);
 
         //Instantiate a vibrator object
-        myVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        //myVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 
         //Show the intro activity (tutorial) only once
@@ -102,13 +103,6 @@ public class EventActivity extends AppCompatActivity {
         eventRecyclerView.setAdapter(mAdapter);
 
 
-
-
-
-
-
-
-
         //Check connection of phone to internet
         checkConnection();
 
@@ -124,9 +118,7 @@ public class EventActivity extends AppCompatActivity {
 
         //eventRecyclerView.setAdapter(mAdapter);
 
-
-
-    }
+    }// End onCreate
 
     public void checkConnection(){
         ConnectivityManager connectMgr =
@@ -164,9 +156,9 @@ public class EventActivity extends AppCompatActivity {
             eventRecyclerView.setAdapter(mAdapter);
 
             //After finding the events, the phone vibrates
-            if (myVibrator.hasVibrator()) {
-                myVibrator.vibrate(1000);
-            }
+//            if (myVibrator.hasVibrator()) {
+//                myVibrator.vibrate(1000);
+//            }
 
         }
     }

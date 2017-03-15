@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ca.sfu.iat381.reachout_app">
+<manifest package="ca.sfu.iat381.reachout_app"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -11,17 +12,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.PopupOverlay">
-        <activity android:name=".views.IntroActivity"
+        <activity
+            android:name=".views.IntroActivity"
             android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".views.EventActivity"
             android:label="@string/title_event_activity"
             android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".views.EventDetails"
+            android:theme="@style/Theme.AppCompat.Light">
         </activity>
     </application>
 

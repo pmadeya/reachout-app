@@ -1,11 +1,13 @@
 package ca.sfu.iat381.reachout_app.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.List;
@@ -19,9 +21,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     private Context mContext;
     private int mNumberOfEvents;
     private List<Event> events;
+   // final private EventItemClickListener mOnClickListener;
 
-    public EventAdapter(Context context, List<Event> events) {
+//    // interface to define listener
+//    public interface EventItemClickListener {
+//        void onListItemClick(int clickedEventIndex);
+//    }
+
+    public EventAdapter(Context context, List<Event> events) { //, EventItemClickListener listener) {
         this.mContext = context;
+        //this.mOnClickListener = listener;
         this.events = events;
     }
 
@@ -41,6 +50,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.nameTv.setText(event.getName());
         holder.locationTv.setText(event.getVenue());
         holder.dateTv.setText(event.getTime());
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "clicked!", Toast.LENGTH_SHORT).show();
+                Intent goToEventDetails = new Intent(mContext, EventDetails.class);
+
+
+                goToEventDetails.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(goToEventDetails);
+            }
+        });
     }
 
     @Override
@@ -48,7 +69,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         return events.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView venueTv;
         public TextView dateTv;
@@ -64,10 +85,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             nameTv = (TextView) itemView.findViewById(R.id.eventName);
             locationTv = (TextView) itemView.findViewById(R.id.eventLocation);
             dateTv = (TextView) itemView.findViewById(R.id.eventDate);
-
+            //itemView.setOnClickListener(this);
+            mView = itemView;
 
         }
 
+//        @Override
+//        public void onClick(View v) {
+//            int clickedPosition = getAdapterPosition();
+//            mOnClickListener.onListItemClick(clickedPosition);
+//        }
     }
 
 
