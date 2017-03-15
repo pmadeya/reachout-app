@@ -39,7 +39,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         final Event event = events.get(position);
         holder.nameTv.setText(event.getName());
-        holder.locationTv.setText(event.getLocation());
+        holder.locationTv.setText(event.getVenue());
+        holder.dateTv.setText(event.getTime());
     }
 
     @Override
@@ -50,7 +51,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView venueTv;
-        public TextView timeTv;
+        public TextView dateTv;
         public TextView locationTv;
         public TextView nameTv;
         public View mView;
@@ -62,6 +63,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
             nameTv = (TextView) itemView.findViewById(R.id.eventName);
             locationTv = (TextView) itemView.findViewById(R.id.eventLocation);
+            dateTv = (TextView) itemView.findViewById(R.id.eventDate);
 
 
         }

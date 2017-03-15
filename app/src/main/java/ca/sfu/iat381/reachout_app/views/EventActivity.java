@@ -41,7 +41,7 @@ public class EventActivity extends AppCompatActivity {
 
     //Events that are happening in the Future in Vancouver in all categories - unsorted
     //TODO: Change query to show events that we want to see
-    private static final String EVENTS_QUERY = "http://api.eventful.com/json/events/search?...&location=Vancouver&date=2017031700-2017031900&category=music&app_key=LGZXJ2LkPvTZQghJ";
+    //private static final String EVENTS_QUERY = "http://api.eventful.com/json/events/search?...&date=ThisWeek&location=Vancouver&category=music&app_key=LGZXJ2LkPvTZQghJ&sort_order=date";
 
     List<Event> eventResults;
 
@@ -118,7 +118,7 @@ public class EventActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 FetchEventsAsyncTask task = new FetchEventsAsyncTask();
-                task.execute(EVENTS_QUERY);
+                task.execute("http://api.eventful.com/json/events/search?...&location=" + inputCity.getEditableText().toString() + "&category=music&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&date=2017031800-2017032000&sort_direction=descending");
             }
         });
 
