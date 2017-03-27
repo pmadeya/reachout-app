@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -81,8 +82,10 @@ public final class EventData {
                 String venue = currentEvent.getString("venue_name");
                 String location = currentEvent.getString("city_name");
                 String time = currentEvent.getString("start_time");
+                double longitude = currentEvent.getDouble("longitude");
+                double latitude = currentEvent.getDouble("latitude");
 
-                Event event = new Event(title, location, time, venue);
+                Event event = new Event(title, location, time, venue, longitude, latitude);
 
                 events.add(event);
             }

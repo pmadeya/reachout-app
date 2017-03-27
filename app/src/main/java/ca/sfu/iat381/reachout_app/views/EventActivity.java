@@ -29,7 +29,6 @@ import ca.sfu.iat381.reachout_app.model.EventData;
 public class EventActivity extends AppCompatActivity {
 
     public RecyclerView eventRecyclerView;
-    //private Vibrator myVibrator;
 
     private EditText inputCity;
     private Toast mToast;
@@ -51,8 +50,6 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        //Instantiate a vibrator object
-        //myVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 
         //Show the intro activity (tutorial) only once

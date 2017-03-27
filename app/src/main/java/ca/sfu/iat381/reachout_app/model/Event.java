@@ -1,13 +1,17 @@
 package ca.sfu.iat381.reachout_app.model;
 
 
-public class Event {
+import java.io.Serializable;
+
+public class Event implements Serializable {
 
     //Title of the event
     private String name;
 
     //City that the event will take place in
     private String location;
+    private double latitude;
+    private double longitude;
 
     //Starting date of the event
     private String time;
@@ -15,11 +19,13 @@ public class Event {
     private String venue;
 
 
-    public Event (String name, String location, String time, String venue) {
+    public Event (String name, String location, String time, String venue, double longitude, double latitude) {
         this.name = name;
         this.location = location;
         this.time = time;
         this.venue = venue;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
 
@@ -37,6 +43,14 @@ public class Event {
 
     public String getVenue() {
         return venue;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 
 }

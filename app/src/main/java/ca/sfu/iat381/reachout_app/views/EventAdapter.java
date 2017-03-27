@@ -2,6 +2,7 @@ package ca.sfu.iat381.reachout_app.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import ca.sfu.iat381.reachout_app.R;
@@ -56,6 +58,17 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             public void onClick(View v) {
                 Toast.makeText(mContext, "clicked!", Toast.LENGTH_SHORT).show();
                 Intent goToEventDetails = new Intent(mContext, EventDetails.class);
+//                Bundle myBundle = new Bundle();
+//
+//                myBundle.putSerializable("event_details", event);
+
+//                String latitude = event.getLatitude();
+//                String longitude = event.getLongitude();
+//
+//                goToEventDetails.putExtra("location_pinpoint_longitude", latitude);
+//                goToEventDetails.putExtra("location_pinpoint_latitude", longitude);
+
+                goToEventDetails.putExtra("Event_object", event);
 
 
                 goToEventDetails.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
