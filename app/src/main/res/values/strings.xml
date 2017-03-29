@@ -6,4 +6,8 @@
     <string name="city_input_title">Find events in:</string>
     <string name="city_name_hint">City name</string>
     <string name="search_events_btn">Search</string>
+
+
+    <string name="sport_event_category">Sports</string>
+    <string name="outdoor_event_category">Outdoor</string>
 </resources>

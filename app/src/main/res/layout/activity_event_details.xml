@@ -3,15 +3,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     tools:context="ca.sfu.iat381.reachout_app.views.EventDetails">
 
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/eventMap"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        map:cameraZoom="15"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/eventPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="151dp"
+                map:srcCompat="@drawable/noun_739677_cc"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Event Name"
+                android:id="@+id/eventName"/>
+
+            <TextView
+                android:id="@+id/eventDate"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/event_date_circle"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                tools:text="8.9" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/eventDescription"
+                android:layout_height="wrap_content"
+                tools:text="Description"/>
+
+        </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/eventMap"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    map:cameraZoom="15"/>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </LinearLayout>

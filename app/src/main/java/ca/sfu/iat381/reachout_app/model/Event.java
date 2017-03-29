@@ -8,6 +8,10 @@ public class Event implements Serializable {
     //Title of the event
     private String name;
 
+
+
+    private String description;
+
     //City that the event will take place in
     private String location;
     private double latitude;
@@ -19,13 +23,14 @@ public class Event implements Serializable {
     private String venue;
 
 
-    public Event (String name, String location, String time, String venue, double longitude, double latitude) {
+    public Event (String name, String location, String time, String venue, double longitude, double latitude, String description) {
         this.name = name;
         this.location = location;
         this.time = time;
         this.venue = venue;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.description = description;
     }
 
 
@@ -51,6 +56,10 @@ public class Event implements Serializable {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
 }

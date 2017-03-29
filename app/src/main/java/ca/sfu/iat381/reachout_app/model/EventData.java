@@ -84,8 +84,9 @@ public final class EventData {
                 String time = currentEvent.getString("start_time");
                 double longitude = currentEvent.getDouble("longitude");
                 double latitude = currentEvent.getDouble("latitude");
+                String description = currentEvent.getString("description");
 
-                Event event = new Event(title, location, time, venue, longitude, latitude);
+                Event event = new Event(title, location, time, venue, longitude, latitude, description);
 
                 events.add(event);
             }

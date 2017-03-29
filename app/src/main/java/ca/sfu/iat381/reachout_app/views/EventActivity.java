@@ -31,7 +31,6 @@ public class EventActivity extends AppCompatActivity {
     public RecyclerView eventRecyclerView;
 
     private EditText inputCity;
-    private Toast mToast;
 
     private Button searchEventsBtn;
 
@@ -50,43 +49,6 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-
-
-        //Show the intro activity (tutorial) only once
-        //  Declare a new thread to do a preference check
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //  Initialize SharedPreferences
-                SharedPreferences getPrefs = PreferenceManager
-                        .getDefaultSharedPreferences(getBaseContext());
-
-                //  Create a new boolean and preference and set it to true
-                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
-
-                //  If the activity has never started before...
-                if (isFirstStart) {
-
-                    //  Launch app intro
-                    Intent i = new Intent(EventActivity.this, IntroActivity.class);
-                    startActivity(i);
-
-                    //  Make a new preferences editor
-                    SharedPreferences.Editor e = getPrefs.edit();
-
-                    //  Edit preference to make it false because we don't want this to run again
-                    e.putBoolean("firstStart", false);
-
-                    //  Apply changes
-                    e.apply();
-                }
-            }
-        });
-
-        // Start the thread
-        t.start();
-
-
         eventResults = new ArrayList<Event>();
         mAdapter = new EventAdapter(getBaseContext(), eventResults);
 
@@ -97,66 +59,37 @@ public class EventActivity extends AppCompatActivity {
         eventRecyclerView = (RecyclerView) findViewById(R.id.eventsRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         eventRecyclerView.setLayoutManager(layoutManager);
+
+
+        eventResults = (List<Event>) getIntent().getSerializableExtra("event_list");
+
+        for (Event event : eventResults) {
+            System.out.println(event.getName());
+        }
+
+        //Return a recylerview of the objects and display in a list
+        mAdapter = new EventAdapter(getBaseContext(), eventResults);
         eventRecyclerView.setAdapter(mAdapter);
 
 
         //Check connection of phone to internet
-        checkConnection();
+        //checkConnection();
 
         //Fetch the Events Data
-        searchEventsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FetchEventsAsyncTask task = new FetchEventsAsyncTask();
-                task.execute("http://api.eventful.com/json/events/search?...&location=" + inputCity.getEditableText().toString() + "&category=music&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&date=2017031800-2017032000&sort_direction=descending");
-            }
-        });
+//        searchEventsBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                FetchEventsAsyncTask task = new FetchEventsAsyncTask();
+//                task.execute("http://api.eventful.com/json/events/search?...&location=" + inputCity.getEditableText().toString() + "&category=music&app_key=LGZXJ2LkPvTZQghJ&sort_order=popularity&sort_direction=descending");
+//            }
+//        });
 
         //eventRecyclerView.setAdapter(mAdapter);
 
     }// End onCreate
 
-    public void checkConnection(){
-        ConnectivityManager connectMgr =
-                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectMgr.getActiveNetworkInfo();
-        if(networkInfo != null && networkInfo.isConnected()){
-            //fetch data
 
-            String networkType = networkInfo.getTypeName().toString();
-            Toast.makeText(this, "connected to " + networkType, Toast.LENGTH_LONG).show();
-        }
-        else {
-            //display error
-            Toast.makeText(this, "no network connection", Toast.LENGTH_LONG).show();
-        }
-    }
 
-    private class FetchEventsAsyncTask extends AsyncTask<String, Void, List<Event>> {
-        @Override
-        protected List<Event> doInBackground(String... urls) {
 
-            if (urls.length < 1 || urls[0] == null) {
-                return null;
-            }
-
-            eventResults = EventData.getEventInfo(urls[0]);
-            return eventResults;
-        }
-
-        @Override
-        protected void onPostExecute(List<Event> events) {
-
-            //Return a recylerview of the objects and display in a list
-            mAdapter = new EventAdapter(getBaseContext(), eventResults);
-            eventRecyclerView.setAdapter(mAdapter);
-
-            //After finding the events, the phone vibrates
-//            if (myVibrator.hasVibrator()) {
-//                myVibrator.vibrate(1000);
-//            }
-
-        }
-    }
 }

@@ -2,6 +2,7 @@ package ca.sfu.iat381.reachout_app.views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,10 +22,20 @@ public class EventDetails extends AppCompatActivity implements OnMapReadyCallbac
     GoogleMap eventMap;
     Event event;
 
+    private TextView eventName;
+    private TextView eventDescription;
+    private TextView eventDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+
+        //Instantiate textviews
+        eventName = (TextView) findViewById(R.id.eventName);
+        eventDescription = (TextView) findViewById(R.id.eventDescription);
+        eventDate = (TextView) findViewById(R.id.eventDate);
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.eventMap);
         mapFragment.getMapAsync(this);
@@ -33,7 +44,12 @@ public class EventDetails extends AppCompatActivity implements OnMapReadyCallbac
         //Get the instance of the event that was clicked
         event = (Event) getIntent().getSerializableExtra("Event_object");
 
-        System.out.println(event.getLatitude());
+
+
+
+
+        eventName.setText(event.getName());
+        eventDescription.setText(event.getDescription());
     }
 
     @Override
