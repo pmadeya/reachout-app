@@ -52,8 +52,6 @@ public class EventActivity extends AppCompatActivity {
         eventResults = new ArrayList<Event>();
         mAdapter = new EventAdapter(getBaseContext(), eventResults);
 
-        inputCity = (EditText) findViewById(R.id.cityName_editText);
-        searchEventsBtn = (Button) findViewById(R.id.searchButton);
         eventListings = (TextView) findViewById(R.id.eventListings_textView);
 
         eventRecyclerView = (RecyclerView) findViewById(R.id.eventsRecyclerView);

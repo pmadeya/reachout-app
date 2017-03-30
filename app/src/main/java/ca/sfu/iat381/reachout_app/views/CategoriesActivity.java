@@ -17,6 +17,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,34 +44,62 @@ public class CategoriesActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient locationClient;
-    private LocationListener locationListener;
+    private com.google.android.gms.location.LocationListener mLocationListener;
 
+
+    private final int LOCATION_PERMISSION = 1;
     private ImageButton sportsCategory;
     private ImageButton outdoorCategory;
     List<Event> eventResults;
 
     public ProgressBar eventLoadingBar;
 
+    private Double currentLatitude;
+    private Double currentLongitude;
+
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        LocationServices.FusedLocationApi.removeLocationUpdates(locationClient, mLocationListener);
+//    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        Toast.makeText(this, "Connected to location services", Toast.LENGTH_SHORT).show();
 
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(locationClient);
-        if (mLastLocation != null) {
-            System.out.println(mLastLocation.getLatitude());
-        }
-
+//        mLocationListener = new com.google.android.gms.location.LocationListener() {
+//            @Override
+//            public void onLocationChanged(Location location) {
+//                //Toast.makeText(MainActivity.this,
+//                //"Location changed: " + location.getLatitude() + " , " + location.getLongitude(),
+//                // Toast.LENGTH_SHORT).show();
+//                // gotoLocation(location.getLatitude(), location.getLongitude(), 15);
+//            }
+//        };
+//
+//        LocationRequest request = LocationRequest.create();
+//        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        request.setInterval(5000);
+//        request.setFastestInterval(1000);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return;
+//        }
+//        LocationServices.FusedLocationApi.requestLocationUpdates(locationClient, request, mLocationListener);
     }
 
     @Override
@@ -82,35 +112,11 @@ public class CategoriesActivity extends AppCompatActivity implements
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        locationClient.connect();
-    }
-
-    @Override
-    protected void onStop() {
-        locationClient.disconnect();
-        super.onStop();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
-
-        // Create an instance of GoogleAPIClient.
-        if (locationClient == null) {
-            locationClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
-
-
-
-
 
         //Show the intro activity (tutorial) only once
         //  Declare a new thread to do a preference check
@@ -151,23 +157,39 @@ public class CategoriesActivity extends AppCompatActivity implements
         sportsCategory = (ImageButton) findViewById(R.id.sportsBtn);
         outdoorCategory = (ImageButton) findViewById(R.id.outdoorBtn);
 
+        locationClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API).addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        locationClient.connect();
+
+
+
+
         eventLoadingBar = (ProgressBar) findViewById(R.id.progress_bar_fetchEvents);
 
 
         checkConnection();
 
 
+
         //Fetch all events within sports category
         sportsCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 showCurrentLocation();
                 //Animate loading bar
                 eventLoadingBar.setVisibility(View.VISIBLE);
 
+
                 //Fetch events in background task
                 FetchEventsAsyncTask fetchEvents = new FetchEventsAsyncTask();
-                fetchEvents.execute("http://api.eventful.com/json/events/search?...&keywords=Canucks&location=Vancouver&category=sports&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&date=2017033100-2017040200&sort_order=popularity&sort_direction=descending");
+                Log.e("LOCATION", "Latitude" + currentLatitude);
+                Log.e("LOCATION", "Longitude" + currentLongitude);
+                fetchEvents.execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=15&units=km&category=sports&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&date=2017033100-2017040200&sort_order=popularity&sort_direction=descending");
 
             }
         });
@@ -176,7 +198,7 @@ public class CategoriesActivity extends AppCompatActivity implements
         outdoorCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCurrentLocation();
+
                 //Animate loading bar
                 eventLoadingBar.setVisibility(View.VISIBLE);
 
@@ -188,15 +210,11 @@ public class CategoriesActivity extends AppCompatActivity implements
         });
     }
 
+
+
     public void showCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
             return;
         }
 
@@ -205,7 +223,15 @@ public class CategoriesActivity extends AppCompatActivity implements
             Toast.makeText(this, "Could not connect!", Toast.LENGTH_SHORT).show();
         } else {
             LatLng latlng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+            currentLatitude = currentLocation.getLatitude();
+            currentLongitude = currentLocation.getLongitude();
+
+            System.out.println(currentLocation.getLatitude());
+            System.out.println(currentLocation.getLongitude());
         }
+
+
     }
 
     private class FetchEventsAsyncTask extends AsyncTask<String, Void, List<Event>> {
