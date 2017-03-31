@@ -75,31 +75,31 @@ public class CategoriesActivity extends AppCompatActivity implements
     public void onConnected(@Nullable Bundle bundle) {
         Toast.makeText(this, "Connected to location services", Toast.LENGTH_SHORT).show();
 
-//        mLocationListener = new com.google.android.gms.location.LocationListener() {
-//            @Override
-//            public void onLocationChanged(Location location) {
-//                //Toast.makeText(MainActivity.this,
-//                //"Location changed: " + location.getLatitude() + " , " + location.getLongitude(),
-//                // Toast.LENGTH_SHORT).show();
-//                // gotoLocation(location.getLatitude(), location.getLongitude(), 15);
-//            }
-//        };
-//
-//        LocationRequest request = LocationRequest.create();
-//        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        request.setInterval(5000);
-//        request.setFastestInterval(1000);
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        LocationServices.FusedLocationApi.requestLocationUpdates(locationClient, request, mLocationListener);
+        mLocationListener = new com.google.android.gms.location.LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                //Toast.makeText(MainActivity.this,
+                //"Location changed: " + location.getLatitude() + " , " + location.getLongitude(),
+                // Toast.LENGTH_SHORT).show();
+                // gotoLocation(location.getLatitude(), location.getLongitude(), 15);
+            }
+        };
+
+        LocationRequest request = LocationRequest.create();
+        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        request.setInterval(5000);
+        request.setFastestInterval(1000);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(locationClient, request, mLocationListener);
     }
 
     @Override
@@ -188,8 +188,8 @@ public class CategoriesActivity extends AppCompatActivity implements
                 FetchEventsAsyncTask fetchEvents = new FetchEventsAsyncTask();
                 Log.e("LOCATION", "Latitude" + currentLatitude);
                 Log.e("LOCATION", "Longitude" + currentLongitude);
-                fetchEvents.execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
-                        "&within=15&units=km&category=sports&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&date=2017033100-2017040200&sort_order=popularity&sort_direction=descending");
+                fetchEvents.execute("http://api.eventful.com/json/events/search?...&keywords=Canucks&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=100&units=km&category=sports&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&date=2017033100-2017040200&sort_order=popularity&sort_direction=descending");
 
             }
         });
@@ -204,7 +204,7 @@ public class CategoriesActivity extends AppCompatActivity implements
 
                 //Fetch events in background task
                 FetchEventsAsyncTask fetchEvents = new FetchEventsAsyncTask();
-                fetchEvents.execute("http://api.eventful.com/json/events/search?...&category=outdoors_recreation&location=Vancouver&app_key=LGZXJ2LkPvTZQghJ&date=2017033100-2017040200&sort_order=popularity&sort_direction=descending");
+                fetchEvents.execute("http://api.eventful.com/json/events/search?...&category=outdoors_recreation&location=Vancouver&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&sort_direction=descending");
 
             }
         });

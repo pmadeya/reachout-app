@@ -12,6 +12,10 @@ import android.widget.Toast;
 
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ca.sfu.iat381.reachout_app.R;
@@ -22,6 +26,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     private Context mContext;
     private int mNumberOfEvents;
+    private Calendar calendar;
+    private Date event_date;
     private List<Event> events;
    // final private EventItemClickListener mOnClickListener;
 
@@ -40,7 +46,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public EventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
-        View itemView = inflater.inflate(R.layout.list_item, parent, false);
+        View itemView = inflater.inflate(R.layout.card_event_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(itemView);
         return viewHolder;
     }
@@ -51,7 +57,30 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         final Event event = events.get(position);
         holder.nameTv.setText(event.getName());
         holder.locationTv.setText(event.getVenue());
-        holder.dateTv.setText(event.getTime());
+
+
+        //String returned from JSON
+        //"start_time":"2017-07-25 19:00:00"
+
+        //Create a date object for the start time
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            event_date = parser.parse(event.getTime());
+            calendar = Calendar.getInstance();
+            calendar.setTime(event_date);
+            System.out.println(calendar.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext, "Can't parse date!", Toast.LENGTH_SHORT).show();
+        }
+
+
+        holder.monthTv.setText(new SimpleDateFormat("MMM").format(calendar.getTime()));
+
+
+
+
+        holder.eventDateNumberCircle.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +114,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView venueTv;
-        public TextView dateTv;
+        public TextView eventDateNumberCircle;
+        public TextView monthTv;
         public TextView locationTv;
         public TextView nameTv;
         public View mView;
@@ -97,7 +127,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
             nameTv = (TextView) itemView.findViewById(R.id.eventName);
             locationTv = (TextView) itemView.findViewById(R.id.eventLocation);
-            dateTv = (TextView) itemView.findViewById(R.id.eventDate);
+            monthTv = (TextView) itemView.findViewById(R.id.eventMonth);
+            eventDateNumberCircle = (TextView) itemView.findViewById(R.id.eventDateNumber);
             //itemView.setOnClickListener(this);
             mView = itemView;
 
