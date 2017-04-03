@@ -83,7 +83,7 @@ public class IntroActivity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
 
-        Intent i = new Intent(IntroActivity.this, CategoriesActivity.class);
+        Intent i = new Intent(IntroActivity.this, MainActivity.class);
         startActivity(i);
     }
 

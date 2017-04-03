@@ -1,6 +1,8 @@
 package ca.sfu.iat381.reachout_app.model;
 
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class Event implements Serializable {

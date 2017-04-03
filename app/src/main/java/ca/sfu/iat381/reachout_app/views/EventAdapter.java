@@ -76,10 +76,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
 
         holder.monthTv.setText(new SimpleDateFormat("MMM").format(calendar.getTime()));
-
-
-
-
         holder.eventDateNumberCircle.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +93,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 //                goToEventDetails.putExtra("location_pinpoint_longitude", latitude);
 //                goToEventDetails.putExtra("location_pinpoint_latitude", longitude);
 
+                goToEventDetails.putExtra("Class", "EventAdapter");
                 goToEventDetails.putExtra("Event_object", event);
+
 
 
                 goToEventDetails.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

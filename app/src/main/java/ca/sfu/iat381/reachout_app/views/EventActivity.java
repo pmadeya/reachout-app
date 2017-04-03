@@ -29,13 +29,6 @@ import ca.sfu.iat381.reachout_app.model.EventData;
 public class EventActivity extends AppCompatActivity {
 
     public RecyclerView eventRecyclerView;
-
-    private EditText inputCity;
-
-    private Button searchEventsBtn;
-
-    private TextView eventListings;
-
     private EventAdapter mAdapter;
 
     //Events that are happening in the Future in Vancouver in all categories - unsorted
@@ -51,8 +44,6 @@ public class EventActivity extends AppCompatActivity {
 
         eventResults = new ArrayList<Event>();
         mAdapter = new EventAdapter(getBaseContext(), eventResults);
-
-        eventListings = (TextView) findViewById(R.id.eventListings_textView);
 
         eventRecyclerView = (RecyclerView) findViewById(R.id.eventsRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

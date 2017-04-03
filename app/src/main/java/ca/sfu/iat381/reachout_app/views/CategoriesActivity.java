@@ -41,7 +41,7 @@ import ca.sfu.iat381.reachout_app.model.Event;
 import ca.sfu.iat381.reachout_app.model.EventData;
 
 public class CategoriesActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private GoogleApiClient locationClient;
     private com.google.android.gms.location.LocationListener mLocationListener;
@@ -50,6 +50,7 @@ public class CategoriesActivity extends AppCompatActivity implements
     private final int LOCATION_PERMISSION = 1;
     private ImageButton sportsCategory;
     private ImageButton outdoorCategory;
+    private ImageButton technologyCategory;
     List<Event> eventResults;
 
     public ProgressBar eventLoadingBar;
@@ -78,10 +79,9 @@ public class CategoriesActivity extends AppCompatActivity implements
         mLocationListener = new com.google.android.gms.location.LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                //Toast.makeText(MainActivity.this,
-                //"Location changed: " + location.getLatitude() + " , " + location.getLongitude(),
-                // Toast.LENGTH_SHORT).show();
-                // gotoLocation(location.getLatitude(), location.getLongitude(), 15);
+
+
+
             }
         };
 
@@ -154,8 +154,12 @@ public class CategoriesActivity extends AppCompatActivity implements
 
 
         eventResults = new ArrayList<Event>();
+
         sportsCategory = (ImageButton) findViewById(R.id.sportsBtn);
         outdoorCategory = (ImageButton) findViewById(R.id.outdoorBtn);
+        technologyCategory = (ImageButton) findViewById(R.id.technology_btn);
+
+        sportsCategory.setOnClickListener(this);
 
         locationClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API).addConnectionCallbacks(this)
@@ -166,7 +170,6 @@ public class CategoriesActivity extends AppCompatActivity implements
 
 
 
-
         eventLoadingBar = (ProgressBar) findViewById(R.id.progress_bar_fetchEvents);
 
 
@@ -174,25 +177,27 @@ public class CategoriesActivity extends AppCompatActivity implements
 
 
 
+
+
         //Fetch all events within sports category
-        sportsCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showCurrentLocation();
-                //Animate loading bar
-                eventLoadingBar.setVisibility(View.VISIBLE);
-
-
-                //Fetch events in background task
-                FetchEventsAsyncTask fetchEvents = new FetchEventsAsyncTask();
-                Log.e("LOCATION", "Latitude" + currentLatitude);
-                Log.e("LOCATION", "Longitude" + currentLongitude);
-                fetchEvents.execute("http://api.eventful.com/json/events/search?...&keywords=Canucks&where="+ currentLatitude + "," + currentLongitude +
-                        "&within=100&units=km&category=sports&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&date=2017033100-2017040200&sort_order=popularity&sort_direction=descending");
-
-            }
-        });
+//        sportsCategory.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                showCurrentLocation();
+//                //Animate loading bar
+//                eventLoadingBar.setVisibility(View.VISIBLE);
+//
+//
+//                //Fetch events in background task
+//                FetchEventsAsyncTask fetchEvents = new FetchEventsAsyncTask();
+//                Log.e("LOCATION", "Latitude" + currentLatitude);
+//                Log.e("LOCATION", "Longitude" + currentLongitude);
+//                fetchEvents.execute("http://api.eventful.com/json/events/search?...&keywords=Canucks&where="+ currentLatitude + "," + currentLongitude +
+//                        "&within=100&units=km&category=sports&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&date=2017033100-2017040200&sort_order=popularity&sort_direction=descending");
+//
+//            }
+//        });
 
         //Fetch all events within outdoors category
         outdoorCategory.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +214,46 @@ public class CategoriesActivity extends AppCompatActivity implements
             }
         });
     }
+
+
+    //Handle event category clicks
+    @Override
+    public void onClick(View v) {
+
+        switch(v.getId()) {
+            case R.id.sportsBtn:
+
+
+                showCurrentLocation();
+                //Animate loading bar
+                eventLoadingBar.setVisibility(View.VISIBLE);
+
+
+                //Fetch events in background task
+                FetchEventsAsyncTask fetchEvents = new FetchEventsAsyncTask();
+                Log.e("LOCATION", "Latitude" + currentLatitude);
+                Log.e("LOCATION", "Longitude" + currentLongitude);
+                fetchEvents.execute("http://api.eventful.com/json/events/search?...&keywords=Canucks&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=100&units=km&category=sports&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&sort_order=popularity&sort_direction=descending");
+
+
+                break;
+            case R.id.outdoorBtn:
+
+
+                break;
+
+            case R.id.technology_btn:
+
+
+                break;
+
+
+            default:
+                break;
+        }
+    }
+
 
 
 
@@ -233,6 +278,8 @@ public class CategoriesActivity extends AppCompatActivity implements
 
 
     }
+
+
 
     private class FetchEventsAsyncTask extends AsyncTask<String, Void, List<Event>> {
         @Override
