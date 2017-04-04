@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="eventDate_color">#E75F40</color>
+    <color name="android_green_background">#99cc33</color>
 </resources>

@@ -83,13 +83,14 @@
 
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/favoriteEventCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:text="Favorite"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true" />
+
 
 
     </RelativeLayout>

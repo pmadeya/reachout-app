@@ -7,11 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
 
@@ -70,7 +69,11 @@ public class IntroActivity extends AppIntro2 {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addSlide(AppIntro2Fragment.newInstance("Reachout", "Reachout Tutorial", R.drawable.android, getColor(R.color.colorPrimary)));
+        addSlide(AppIntro2Fragment.newInstance("Reachout", "Find events around you by choosing a category, see a map, or search by keyword", R.drawable.mainactivity_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
+        addSlide(AppIntro2Fragment.newInstance("Map", "Pan around a map full of events closest to your current location", R.drawable.mapview_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
+        addSlide(AppIntro2Fragment.newInstance("", "Get details of a specific event happening in the area", R.drawable.eventdetails_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
+        addSlide(AppIntro2Fragment.newInstance("", "Search events by category, nearest to you", R.drawable.categoryactivity_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
+        addSlide(AppIntro2Fragment.newInstance("Keep track of your favorite events", "Click the arrow to get started!", R.drawable.eventlistings_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
     }
 
     @Override

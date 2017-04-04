@@ -35,6 +35,11 @@ public class Event implements Serializable {
         this.description = description;
     }
 
+    //SQLite db for testing constructor
+    public Event (String name, String venue) {
+        this.name = name;
+        this.venue = venue;
+    }
 
     public String getName() {
         return name;

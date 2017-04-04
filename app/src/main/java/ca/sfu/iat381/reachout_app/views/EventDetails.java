@@ -2,8 +2,10 @@ package ca.sfu.iat381.reachout_app.views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +23,16 @@ import java.util.Date;
 import java.util.List;
 
 import ca.sfu.iat381.reachout_app.R;
+import ca.sfu.iat381.reachout_app.model.DBConstants;
 import ca.sfu.iat381.reachout_app.model.Event;
+import ca.sfu.iat381.reachout_app.model.MyEventDatabase;
 
 /*
 Show Event details with a main map fragment that shows the exact location of the event
  */
 public class EventDetails extends AppCompatActivity implements OnMapReadyCallback {
 
+    MyEventDatabase db;
     GoogleMap eventMap;
     Event event;
     Event map_view_event;
@@ -41,11 +46,18 @@ public class EventDetails extends AppCompatActivity implements OnMapReadyCallbac
     private Date event_date;
 
     WebView eventPhoto;
+    private CheckBox favoriteEvent;
+    private boolean isFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+
+
+        db = new MyEventDatabase(this);
+
+        favoriteEvent = (CheckBox) findViewById(R.id.favoriteEventCheckbox);
 
         //Instantiate textviews
         eventName = (TextView) findViewById(R.id.eventName);
@@ -91,6 +103,54 @@ public class EventDetails extends AppCompatActivity implements OnMapReadyCallbac
         eventDay.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)));
 
 
+        favoriteEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()) {
+                    isFavorite = true;
+                    Toast.makeText(getApplicationContext(), "Box is checked!", Toast.LENGTH_SHORT).show();
+
+                    //Add this event to the database
+                    System.out.println("Venue is: " + event.getVenue());
+                    addToFavorites(event.getName(), event.getLocation(), event.getTime(), event.getVenue(),
+                            Double.toString(event.getLongitude()), Double.toString(event.getLatitude()), event.getDescription());
+
+
+                }
+            }
+        });
+
+
+    }
+
+    public void addToFavorites(String name, String location, String time, String venue, String longitude, String latitude, String description) {
+
+        long id = db.insertData(name, location, time, venue, longitude, latitude, description);
+
+        if (id < 0)
+        {
+            Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        if (isFavorite) {
+//            favoriteEvent.setVisibility(View.INVISIBLE);
+//        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isFavorite) {
+            favoriteEvent.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

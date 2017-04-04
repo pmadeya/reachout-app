@@ -3,6 +3,7 @@ package ca.sfu.iat381.reachout_app.views;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,6 +11,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -38,12 +40,15 @@ import java.util.Locale;
 import ca.sfu.iat381.reachout_app.R;
 import ca.sfu.iat381.reachout_app.model.Event;
 import ca.sfu.iat381.reachout_app.model.EventData;
+import ca.sfu.iat381.reachout_app.model.MyEventDatabase;
 
 import static android.R.id.list;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
+
+    MyEventDatabase db;
 
     private final String LOG_TAG = "Reachout-app";
     private List<Event> eventResults;
@@ -52,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton categoryViewBtn;
     private ImageButton mapViewBtn;
     private Button searchKeywordEvents;
-    private Button loginBtn;
     private Button favoriteEventsBtn;
 
     private TextView currentCitytxtView;
@@ -68,6 +72,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Show the intro activity (tutorial) only once
+        //  Declare a new thread to do a preference check
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Initialize SharedPreferences
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
+
+                //  If the activity has never started before...
+                if (isFirstStart) {
+
+                    //  Launch app intro
+                    Intent i = new Intent(MainActivity.this, IntroActivity.class);
+                    startActivity(i);
+
+                    //  Make a new preferences editor
+                    SharedPreferences.Editor e = getPrefs.edit();
+
+                    //  Edit preference to make it false because we don't want this to run again
+                    e.putBoolean("firstStart", false);
+
+                    //  Apply changes
+                    e.apply();
+                }
+            }
+        });
+
+        // Start the thread
+        t.start();
+
+        //Instantiate a Database object
+        db = new MyEventDatabase(this);
+
         //EditText
         eventKeywordSearch = (EditText) findViewById(R.id.eventKeyword_editText);
 
@@ -77,14 +118,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Buttons
         categoryViewBtn = (ImageButton) findViewById(R.id.categoryView_btn);
         mapViewBtn = (ImageButton) findViewById(R.id.mapView_btn);
-        loginBtn = (Button) findViewById(R.id.loginBtn);
         favoriteEventsBtn = (Button) findViewById(R.id.favoriteEventsBtn);
         searchKeywordEvents = (Button) findViewById(R.id.searchKeywordEvents);
 
         //Listeners
         categoryViewBtn.setOnClickListener(this);
         mapViewBtn.setOnClickListener(this);
-        loginBtn.setOnClickListener(this);
         favoriteEventsBtn.setOnClickListener(this);
         searchKeywordEvents.setOnClickListener(this);
 
@@ -143,15 +182,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
 
-            case R.id.loginBtn:
-                //Login to view favorite events and recently viewed
-
-
-                break;
             case R.id.favoriteEventsBtn:
-                //View favorite Events in Database
+                //View favorite Events stored in Database
+                Intent intent = new Intent(this, EventActivity.class);
 
-
+                //put extra to differentiate from favorite events to all events
+                intent.putExtra("Class", "MainActivityFavorites");
+                startActivity(intent);
 
                 break;
 
