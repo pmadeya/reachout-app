@@ -108,7 +108,6 @@ public class EventDetails extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()) {
                     isFavorite = true;
-                    Toast.makeText(getApplicationContext(), "Box is checked!", Toast.LENGTH_SHORT).show();
 
                     //Add this event to the database
                     System.out.println("Venue is: " + event.getVenue());
@@ -129,11 +128,11 @@ public class EventDetails extends AppCompatActivity implements OnMapReadyCallbac
 
         if (id < 0)
         {
-            Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cannot add to Favorites", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Added to Favorites!", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageButton categoryViewBtn;
     private ImageButton mapViewBtn;
+
+
     private Button searchKeywordEvents;
     private Button favoriteEventsBtn;
 
@@ -163,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
 
             case R.id.categoryView_btn:
-                Toast.makeText(this, "You clicked category view!", Toast.LENGTH_SHORT).show();
 
                 //Navigate into activity_categories
                 Intent i = new Intent(MainActivity.this, CategoriesActivity.class);
@@ -172,14 +173,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.mapView_btn:
-                Toast.makeText(this, "You clicked map view!", Toast.LENGTH_SHORT).show();
 
                 //Fetch the event data from the background thread
                 new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&where="+ currentCoordinates.getLatitude() + "," + currentCoordinates.getLongitude() +
-                "&within=10&units=km&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&sort_order=popularity&sort_direction=descending", "mapView");
+                "&within=10&units=km&app_key=LGZXJ2LkPvTZQghJ&date=Future", "mapView");
 
                 //Go to onPostExecute to start the intent
-
                 break;
 
             case R.id.favoriteEventsBtn:
@@ -197,9 +196,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //FetchEventsAsyncTask fetchEvents = new FetchEventsAsyncTask();
                 Log.e("LOCATION", "Latitude" + currentCoordinates.getLatitude());
                 Log.e("LOCATION", "Longitude" + currentCoordinates.getLongitude());
-                new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&keywords=" + eventKeywordSearch.getText() + "&where="+ currentCoordinates.getLatitude() + "," + currentCoordinates.getLongitude() +
-                        "&within=100&units=km&category=sports&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&sort_order=popularity&sort_direction=descending", "searchKeyword");
 
+                if (eventKeywordSearch.getText().toString().contains(" ")) {
+                    String keyword = eventKeywordSearch.getText().toString().replaceAll("\\s+","%20");
+                    System.out.println(eventKeywordSearch.getText().toString());
+
+                    new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&keywords=" + keyword + "&where="+ currentCoordinates.getLatitude() + "," + currentCoordinates.getLongitude() +
+                            "&within=100&units=km&app_key=LGZXJ2LkPvTZQghJ&date=2017040700-2017043000&sort_order=popularity&sort_direction=ascending", "searchKeyword");
+                } else {
+                    new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&keywords=" + eventKeywordSearch.getText().toString() + "&where=" + currentCoordinates.getLatitude() + "," + currentCoordinates.getLongitude() +
+                            "&within=100&units=km&app_key=LGZXJ2LkPvTZQghJ&date=2017040700-2017043000&sort_order=popularity&sort_direction=ascending", "searchKeyword");
+                }
 
 
             default:
@@ -217,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //fetch data
 
             String networkType = networkInfo.getTypeName().toString();
-            Toast.makeText(this, "connected to " + networkType, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Connected to " + networkType, Toast.LENGTH_LONG).show();
         } else {
             //display error
             Toast.makeText(this, "no network connection", Toast.LENGTH_LONG).show();
@@ -230,7 +237,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Connect api client
         mGoogleApiClient.connect();
-        Toast.makeText(this, "Connected to OnStart!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -242,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
-        Toast.makeText(this, "Connected to Location Request!", Toast.LENGTH_SHORT).show();
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(1000); //Updates every 1 seconds
@@ -301,9 +306,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 currentCitytxtView.setText(locality + ", " + add.getAdminArea() + ", " + add.getCountryName());
             }
-            else {
-                Toast.makeText(this, "Nothing!", Toast.LENGTH_SHORT).show();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -329,6 +331,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected void onPostExecute(List<Event> events) {
+            eventKeywordSearch.getText().clear();
 
             if (modes.equals("mapView")) {
                 Intent mapIntent = new Intent(MainActivity.this, MapView.class);
@@ -340,9 +343,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mapIntent.putExtra("current_location_longitude", currentCoordinates.getLongitude());
                 startActivity(mapIntent);
             }
-            else {
+            else if (modes.equals("searchKeyword")) {
                 //Go to the event activity and list events of that category
                 Intent i = new Intent(MainActivity.this, EventActivity.class);
+                i.putExtra("Class", "MainActivity");
                 i.putExtra("event_list", (Serializable) eventResults);
 
                 startActivity(i);

@@ -47,8 +47,6 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback {
 
         //Get instance of all events in the area
         returnedEvents = (List<Event>) getIntent().getSerializableExtra("event_map_markers");
-
-
     }
 
     @Override

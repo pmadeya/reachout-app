@@ -81,7 +81,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "clicked!", Toast.LENGTH_SHORT).show();
                 Intent goToEventDetails = new Intent(mContext, EventDetails.class);
 //                Bundle myBundle = new Bundle();
 //

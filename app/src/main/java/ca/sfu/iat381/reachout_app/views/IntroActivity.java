@@ -73,7 +73,7 @@ public class IntroActivity extends AppIntro2 {
         addSlide(AppIntro2Fragment.newInstance("Map", "Pan around a map full of events closest to your current location", R.drawable.mapview_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
         addSlide(AppIntro2Fragment.newInstance("", "Get details of a specific event happening in the area", R.drawable.eventdetails_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
         addSlide(AppIntro2Fragment.newInstance("", "Search events by category, nearest to you", R.drawable.categoryactivity_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
-        addSlide(AppIntro2Fragment.newInstance("Keep track of your favorite events", "Click the arrow to get started!", R.drawable.eventlistings_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
+        addSlide(AppIntro2Fragment.newInstance("Keep track of your favorite events", "Click to get started!", R.drawable.eventlistings_screenshot, ContextCompat.getColor(this, R.color.android_green_background)));
     }
 
     @Override

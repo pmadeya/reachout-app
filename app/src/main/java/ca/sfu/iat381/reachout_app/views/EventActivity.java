@@ -108,7 +108,7 @@ public class EventActivity extends AppCompatActivity {
             mAdapter = new EventAdapter(getBaseContext(), eventResults);
             eventRecyclerView.setAdapter(mAdapter);
         }
-        else if (activity.equals("CategoriesActivity")) {
+        else if (activity.equals("CategoriesActivity") || activity.equals("MainActivity")) {
 
             //Retrieve all the events from the query
             eventResults = (List<Event>) getIntent().getSerializableExtra("event_list");

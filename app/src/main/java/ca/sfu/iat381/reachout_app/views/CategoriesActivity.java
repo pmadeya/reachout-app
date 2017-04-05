@@ -51,6 +51,14 @@ public class CategoriesActivity extends AppCompatActivity implements
     private ImageButton sportsCategory;
     private ImageButton outdoorCategory;
     private ImageButton technologyCategory;
+    private ImageButton artsCategory;
+    private ImageButton foodCategory;
+    private ImageButton religionCategory;
+    private ImageButton concertsCategory;
+    private ImageButton familyCategory;
+
+
+
     List<Event> eventResults;
 
     public ProgressBar eventLoadingBar;
@@ -74,7 +82,7 @@ public class CategoriesActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "Connected to location services", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Connected to location services", Toast.LENGTH_SHORT).show();
 
         mLocationListener = new com.google.android.gms.location.LocationListener() {
             @Override
@@ -126,8 +134,20 @@ public class CategoriesActivity extends AppCompatActivity implements
         sportsCategory = (ImageButton) findViewById(R.id.sportsBtn);
         outdoorCategory = (ImageButton) findViewById(R.id.outdoorBtn);
         technologyCategory = (ImageButton) findViewById(R.id.technology_btn);
+        artsCategory = (ImageButton) findViewById(R.id.artsBtn);
+        foodCategory = (ImageButton) findViewById(R.id.foodBtn);
+        religionCategory = (ImageButton) findViewById(R.id.religionBtn);
+        concertsCategory = (ImageButton) findViewById(R.id.concertsBtn);
+        familyCategory = (ImageButton) findViewById(R.id.familyBtn);
 
         sportsCategory.setOnClickListener(this);
+        outdoorCategory.setOnClickListener(this);
+        technologyCategory.setOnClickListener(this);
+        artsCategory.setOnClickListener(this);
+        foodCategory.setOnClickListener(this);
+        religionCategory.setOnClickListener(this);
+        concertsCategory.setOnClickListener(this);
+        familyCategory.setOnClickListener(this);
 
         locationClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API).addConnectionCallbacks(this)
@@ -167,20 +187,6 @@ public class CategoriesActivity extends AppCompatActivity implements
 //            }
 //        });
 
-        //Fetch all events within outdoors category
-        outdoorCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //Animate loading bar
-                eventLoadingBar.setVisibility(View.VISIBLE);
-
-                //Fetch events in background task
-                FetchEventsAsyncTask fetchEvents = new FetchEventsAsyncTask();
-                fetchEvents.execute("http://api.eventful.com/json/events/search?...&category=outdoors_recreation&location=Vancouver&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&sort_direction=descending");
-
-            }
-        });
     }
 
 
@@ -198,24 +204,94 @@ public class CategoriesActivity extends AppCompatActivity implements
 
 
                 //Fetch events in background task
-                FetchEventsAsyncTask fetchEvents = new FetchEventsAsyncTask();
-                Log.e("LOCATION", "Latitude" + currentLatitude);
-                Log.e("LOCATION", "Longitude" + currentLongitude);
-                fetchEvents.execute("http://api.eventful.com/json/events/search?...&keywords=Canucks&where="+ currentLatitude + "," + currentLongitude +
-                        "&within=100&units=km&category=sports&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&sort_order=popularity&sort_direction=descending");
+                new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=15&units=km&category=sports&date=2017040700-2017043000&app_key=LGZXJ2LkPvTZQghJ&sort_order=popularity&sort_direction=descending");
 
+//                Log.e("LOCATION", "Latitude" + currentLatitude);
+//                Log.e("LOCATION", "Longitude" + currentLongitude);
 
                 break;
             case R.id.outdoorBtn:
 
 
+                showCurrentLocation();
+                //Animate loading bar
+                eventLoadingBar.setVisibility(View.VISIBLE);
+
+                //Fetch events in background task
+                new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=15&units=km&category=outdoors_recreation&date=2017040700-2017043000&app_key=LGZXJ2LkPvTZQghJ&sort_order=popularity&sort_direction=descending");
+
                 break;
 
             case R.id.technology_btn:
 
+                showCurrentLocation();
+                //Animate loading bar
+                eventLoadingBar.setVisibility(View.VISIBLE);
+
+                //Fetch events in background task
+                new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=15&units=km&category=technology&date=2017040700-2017043000&app_key=LGZXJ2LkPvTZQghJ&sort_order=popularity&sort_direction=descending");
+
 
                 break;
 
+            case R.id.artsBtn:
+
+                showCurrentLocation();
+                //Animate loading bar
+                eventLoadingBar.setVisibility(View.VISIBLE);
+
+                //Fetch events in background task
+                new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=15&units=km&category=performing_arts&date=2017040700-2017043000&app_key=LGZXJ2LkPvTZQghJ&sort_order=popularity&sort_direction=descending");
+
+                break;
+            case R.id.foodBtn:
+
+                showCurrentLocation();
+                //Animate loading bar
+                eventLoadingBar.setVisibility(View.VISIBLE);
+
+                //Fetch events in background task
+                new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=15&units=km&category=food&date=2017040700-2017043000&app_key=LGZXJ2LkPvTZQghJ&sort_order=popularity&sort_direction=descending");
+
+                break;
+
+            case R.id.religionBtn:
+                showCurrentLocation();
+                //Animate loading bar
+                eventLoadingBar.setVisibility(View.VISIBLE);
+
+                //Fetch events in background task
+                new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=15&units=km&category=religion_spirituality&date=2017040700-2017043000&app_key=LGZXJ2LkPvTZQghJ&sort_order=popularity&sort_direction=descending");
+
+                break;
+            case R.id.concertsBtn:
+                showCurrentLocation();
+                //Animate loading bar
+                eventLoadingBar.setVisibility(View.VISIBLE);
+
+                //Fetch events in background task
+                new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=15&units=km&category=music&date=2017040700-2017043000&app_key=LGZXJ2LkPvTZQghJ&sort_order=popularity&sort_direction=descending");
+
+                break;
+
+
+            case R.id.familyBtn:
+                showCurrentLocation();
+                //Animate loading bar
+                eventLoadingBar.setVisibility(View.VISIBLE);
+
+                //Fetch events in background task
+                new FetchEventsAsyncTask().execute("http://api.eventful.com/json/events/search?...&where="+ currentLatitude + "," + currentLongitude +
+                        "&within=15&units=km&category=family_fun_kids&date=2017040700-2017043000&app_key=LGZXJ2LkPvTZQghJ&sort_order=date&sort_direction=descending");
+
+                break;
 
             default:
                 break;
