@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">Reachout-app</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_event_activity">Reachout</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="city_input_title">Find events in:</string>
+    <string name="city_name_hint">City name</string>
+    <string name="search_events_btn">Search</string>
+    <string name="category_view_txt_view">Category View</string>
+    <string name="map_view_txt_view">Map View</string>
+    <string name="login_btn_title">Login</string>
+
+
+    <string name="sport_event_category">Sports</string>
+    <string name="outdoor_event_category">Outdoor</string>
+    <string name="technology_event_category">Technology</string>
+    <string name="food_event_category">Food</string>
+    <string name="arts_event_category">Arts</string>
+    <string name="religious_event_category">Religion</string>
+    <string name="concerts_event_category">Concerts</string>
+    <string name="family_event_category">Family</string>
 </resources>

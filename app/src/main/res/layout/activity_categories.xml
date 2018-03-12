@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    tools:context="ca.sfu.iat381.reachout_app.views.CategoriesActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:id="@+id/sportsBtn"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/sports_icon"/>
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="#000000"
+                    android:text="@string/sport_event_category">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:id="@+id/outdoorBtn"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/outdoor_icon" />
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:text="@string/outdoor_event_category">
+
+                </TextView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:id="@+id/technology_btn"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="10dp"
+                app:srcCompat="@drawable/technology_icon"/>
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:text="@string/technology_event_category">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:id="@+id/artsBtn"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="10dp"
+                app:srcCompat="@drawable/performing_arts_icon" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:text="@string/arts_event_category">
+
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:id="@+id/foodBtn"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="10dp"
+                app:srcCompat="@drawable/food_icon"/>
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:gravity="center|bottom"
+                android:layout_gravity="center"
+                android:textColor="#000000"
+                android:text="@string/food_event_category">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:id="@+id/religionBtn"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="10dp"
+                app:srcCompat="@drawable/religous_icon" />
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#000000"
+                android:text="@string/religious_event_category">
+
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:id="@+id/concertsBtn"
+                    android:layout_gravity="center"
+                    android:layout_height="72dp"
+                    android:background="@null"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/concerts_icon"/>
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:gravity="center|bottom"
+                    android:layout_gravity="center"
+                    android:textColor="#000000"
+                    android:text="@string/concerts_event_category">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:id="@+id/familyBtn"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/family_icon" />
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="#000000"
+                    android:text="@string/family_event_category">
+
+                </TextView>
+
+            </LinearLayout>
+
+    </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+
+        <!--<TextView-->
+            <!--android:id="@+id/textView"-->
+            <!--android:textStyle="bold"-->
+            <!--android:textColor="#000000"-->
+            <!--android:textSize="20sp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Paul's Dashboard" />-->
+
+
+
+
+        <ProgressBar
+            android:id="@+id/progress_bar_fetchEvents"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>
