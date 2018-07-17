@@ -20,11 +20,11 @@ Install Android Studio: https://developer.android.com/studio/install.html
 
 ## Running The Application
 
-Run the application within Android Studio and load it with a virtual Android OS emulator or a native device.
+Run the application within Android Studio and load it with a virtual Android OS emulator or a physical Android device.
 
 ## Version Control
 
-GitHub was used to track all modifications and new implementations. For the full history, see the [commits on this repository](https://github.com/lauraguevara97/Best_Rate_Finder/commits/master).
+GitHub was used to track all modifications and new implementations. For the full history of moditifications, see the [commits on this repository](https://github.com/lauraguevara97/Best_Rate_Finder/commits/master).
 
 ## Authors
 
